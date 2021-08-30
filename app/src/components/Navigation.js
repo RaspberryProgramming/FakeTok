@@ -8,6 +8,10 @@ const Navigation = () => {
           <i class="bi bi-collection-play"/>
           Player
         </Link>
+        <Link to="/upload">
+          <i class="bi bi-upload"/>
+          Settings
+        </Link>
         <Link to="/settings">
           <i class="bi bi-gear"/>
           Settings

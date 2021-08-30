@@ -28,6 +28,25 @@ html, body {
   width:100%;
 }
 
+.upload {
+  display:flex;
+  flex-direction:column;
+  height:90vh;
+  width:100%;
+}
+
+.form-group {
+  margin:10px;
+}
+
+.form .btn {
+  margin:10px;
+}
+
+.form .invalid {
+  color: red;
+}
+
 .video {
   flex-grow:1;
   flex-shrink:0;
