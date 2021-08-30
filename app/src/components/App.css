@@ -9,7 +9,28 @@ html, body {
   width:100vw;
 }
 
+.navbar {
+  height:10vh;
+  width:100%;
+  justify-content: space-around;
+  background-color:black;
+}
+
+.navbar * {
+  display: flex;
+  flex-direction:column;
+}
+
+.player {
+  display:flex;
+  flex-direction:column;
+  height:90vh;
+  width:100%;
+}
+
 .video {
+  flex-grow:1;
+  flex-shrink:0;
   top:0;
   left:0;
   width:100%;
@@ -22,6 +43,8 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
+  flex-grow:1;
+  flex-shrink:0;
   top: -100%;
   left: 0;
   width: 100%;
@@ -43,6 +66,18 @@ html, body {
   margin-left:auto;
   justify-content: center;
   padding:10px;
+}
+
+a:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
 }
 
 i {

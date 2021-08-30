@@ -1,19 +1,19 @@
 import React from 'react';
-import Video from './Video';
-import Widgets from './Widgets';
-import RightButtons from './Widgets/RightButtons';
-import VideoInfo from './Widgets/VideoInfo';
+import { Router, Route } from 'react-router-dom';
+import Player from './Player';
+import Navigation from './Navigation';
 import './App.css';
+import history from '../history';
+
 
 class App extends React.Component {
   render() {
     return (
       <div className="bg-dark text-light app">
-        <Video />
-        <Widgets>
-          <RightButtons />
-          <VideoInfo username={"UserName"} description={"This is a description"} />
-        </Widgets>
+        <Router history={history}>
+          <Route path="/" exact component={Player} />
+          <Navigation />
+        </Router>
       </div>
     );
   }
