@@ -4,7 +4,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="video">
-        Video
+        <video src="/default.webm" autoplay="true"></video>
       </div>
     );
   }

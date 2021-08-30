@@ -4,8 +4,13 @@ class VideoInfo extends React.Component {
 
   render() {
     return (
-      <div>
-        VideoInfo
+      <div className="video-info">
+        <div className="username">
+          @{ this.props.username }
+        </div>
+        <div className="description">
+          { this.props.description }
+        </div>
       </div>
     );
   }

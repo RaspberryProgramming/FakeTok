@@ -12,7 +12,7 @@ class App extends React.Component {
         <Video />
         <Widgets>
           <RightButtons />
-          <VideoInfo />
+          <VideoInfo username={"UserName"} description={"This is a description"} />
         </Widgets>
       </div>
     );
