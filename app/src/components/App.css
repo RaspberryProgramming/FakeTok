@@ -109,6 +109,18 @@ i {
   height:100%;
 }
 
+.title {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app-content hr {
+  height: 2px;
+  margin:0;
+}
+
 /* Mobile view */
 
 @media only screen and (max-width: 600px) {

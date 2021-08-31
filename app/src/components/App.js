@@ -9,6 +9,10 @@ import history from '../history';
 
 
 class App extends React.Component {
+  componentDidMount() {
+    console.log(localStorage.getItem('username')); // TODO: Wire up with redux
+  }
+
   render() {
     return (
       <div className="bg-dark text-light app">
