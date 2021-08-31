@@ -2,6 +2,12 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 
 const TemplateForm = (props) => {
+  /*
+  TemplateForm requires that fields prop and validate prop are passed.
+    fields must be an array containing objects. Each object must have a name,
+    label, and type value. Each of these pertain to field. The validate prop
+    should be a function for react-final-form Form.
+  */
 
   const renderError = ({ error, submitFailed }) => {
     if (submitFailed && error) {
@@ -13,12 +19,13 @@ const TemplateForm = (props) => {
     }
   };
 
-  const renderInput = ({ input, label, meta }) => {
+  const renderInput = ({ input, label, onInput, description, meta }) => {
 
     return (
       <div className={`form-group ${meta.submitFailed && meta.error ? 'invalid' : ''}`}>
         <label>{label}</label>
-        <input {...input} className="form-control"/>
+        <input {...input} onInput={onInput} className="form-control"/>
+        <small>{description}</small>
         {renderError(meta)}
       </div>
     );
@@ -27,36 +34,25 @@ const TemplateForm = (props) => {
   const onSubmit = (formValues) => {
     console.log(formValues);
   };
+  console.log(props);
+
+  const fields = props.fields.map(f => {
+    return <Field key={f.name} name={f.name} label={f.label} type={f.type}
+            description={f.description} onInput={f.onInput}
+            component={renderInput}/>;
+  });
 
   return (
     <Form
       onSubmit={onSubmit}
-      validate={(formValues) => {
-        const errors = {};
-
-        if (!formValues.file) {
-          errors.file = "You must upload a video";
-        } else {
-          let filename = formValues.file.split('.');
-
-          if (!(['webm', 'mp4'].includes(filename[filename.length-1]))) {
-            errors.file = "You must upload a .mp4 or .webm video";
-          }
-
-        }
-
-        if (!formValues.description) {
-          errors.description = "You must enter a description";
-        }
-
-        return errors;
-      }}
-
+      validate={props.validate}
+      initialValues={props.initialValues}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className="form">
-          <Field name="description" label="Description" component={renderInput}/>
-          <Field name="file" label="File" type="file" component={renderInput}/>
-          <button className="btn btn-primary">Submit</button>
+          {fields}
+          <button className={`btn btn-primary ${props.button ? 'd-block' : 'd-none'}`}>
+            Submit
+          </button>
         </form>
       )}
     />
