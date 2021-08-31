@@ -4,11 +4,11 @@ class RightButtons extends React.Component {
 
   renderButtons() {
     return (
-      <div class="right-buttons">
-        <i class="bi bi-circle" />
+      <div className="right-buttons">
+        <i className="bi bi-circle" />
         <i className="bi bi-heart-fill" />
-        <i class="bi bi-chat-dots" />
-        <i class="bi bi-share" />
+        <i className="bi bi-chat-dots" />
+        <i className="bi bi-share" />
       </div>
     );
   }

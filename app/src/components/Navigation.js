@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => {
     return (
-      <nav class="navbar">
+      <nav className="navbar">
         <Link to="/">
-          <i class="bi bi-collection-play"/>
+          <i className="bi bi-collection-play"/>
           Player
         </Link>
         <Link to="/upload">
-          <i class="bi bi-upload"/>
-          Settings
+          <i className="bi bi-upload"/>
+          Upload
         </Link>
         <Link to="/settings">
-          <i class="bi bi-gear"/>
+          <i className="bi bi-gear"/>
           Settings
         </Link>
       </nav>
