@@ -5,7 +5,7 @@ class Upload extends React.Component {
 
   render() {
     return (
-      <div className="upload">
+      <div className="app-content">
         <h1>Upload your Video</h1>
         <TemplateForm />
       </div>

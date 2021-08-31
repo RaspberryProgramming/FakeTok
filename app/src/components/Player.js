@@ -7,7 +7,7 @@ import VideoInfo from './Widgets/VideoInfo';
 class Player extends React.Component {
   render() {
     return (
-      <div className="player">
+      <div className="app-content">
         <Video />
         <Widgets>
           <RightButtons />
