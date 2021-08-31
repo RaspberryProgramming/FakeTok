@@ -2,8 +2,9 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 
 const TemplateForm = (props) => {
-  const renderError = ({ error, touched }) => {
-    if (touched && error) {
+
+  const renderError = ({ error, submitFailed }) => {
+    if (submitFailed && error) {
       return (
         <div className="invalid">
           {error}
@@ -15,9 +16,9 @@ const TemplateForm = (props) => {
   const renderInput = ({ input, label, meta }) => {
 
     return (
-      <div class={`form-group ${meta.error && meta.touched ? 'invalid' : ''}`}>
+      <div className={`form-group ${meta.submitFailed && meta.error ? 'invalid' : ''}`}>
         <label>{label}</label>
-        <input {...input} class="form-control"/>
+        <input {...input} className="form-control"/>
         {renderError(meta)}
       </div>
     );
@@ -38,7 +39,7 @@ const TemplateForm = (props) => {
         } else {
           let filename = formValues.file.split('.');
 
-          if (!(filename[filename.length-1] in ['webm', 'mp4'])) {
+          if (!(['webm', 'mp4'].includes(filename[filename.length-1]))) {
             errors.file = "You must upload a .mp4 or .webm video";
           }
 
