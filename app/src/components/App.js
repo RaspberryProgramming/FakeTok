@@ -14,6 +14,7 @@ class App extends React.Component {
   }
 
   render() {
+    // React router used to determine which component to show
     return (
       <div className="bg-dark text-light app">
         <Router history={history}>

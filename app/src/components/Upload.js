@@ -3,26 +3,33 @@ import TemplateForm from './TemplateForm';
 
 class Upload extends React.Component {
 
+  // Required fields for upload form
   fields = [
     {name: 'description', label:'Description', type:'text'},
     {name: 'file', label:'File', type:'file'},
   ];
 
+  // function that validates the form
   validate(formValues) {
 
+    // Stores error messages
     const errors = {};
 
+    // If the file field doesn't exist let them know to upload a file
     if (!formValues.file) {
       errors.file = "You must upload a video";
     } else {
+      // Process the filename
       let filename = formValues.file.split('.');
 
+      // Check if the file is a video file
       if (!(['webm', 'mp4'].includes(filename[filename.length-1]))) {
         errors.file = "You must upload a .mp4 or .webm video";
       }
 
     }
 
+    // Notify user if field is empty
     if (!formValues.description) {
       errors.description = "You must enter a description";
     }
@@ -32,6 +39,7 @@ class Upload extends React.Component {
   }
 
   render() {
+    // Form used to upload a video
     return (
       <div className="app-content">
         <h1>Upload your Video</h1>

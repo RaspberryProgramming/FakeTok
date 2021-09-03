@@ -25,3 +25,5 @@ Run Serer
 ```
 npm start
 ```
+
+## api design

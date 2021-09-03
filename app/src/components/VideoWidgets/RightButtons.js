@@ -3,6 +3,7 @@ import React from 'react';
 class RightButtons extends React.Component {
 
   renderButtons() {
+    // each icon will be used to like, share, comment and open the poster's profile
     return (
       <div className="right-buttons">
         <i className="bi bi-circle" />

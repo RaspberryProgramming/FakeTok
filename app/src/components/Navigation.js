@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navigation = () => {
+    // Navigation for the app. react-router is used to determine which page to show
     return (
       <nav className="navbar">
         <Link to="/">
