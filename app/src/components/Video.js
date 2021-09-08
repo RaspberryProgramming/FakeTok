@@ -6,7 +6,7 @@ class App extends React.Component {
     // Temporarily return default video
     return (
       <div className="video">
-        <video src="/default.webm" loop autoPlay></video>
+        <video src="" loop autoPlay></video>
       </div>
     );
   }
