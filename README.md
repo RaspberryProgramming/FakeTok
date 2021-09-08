@@ -2,11 +2,11 @@
 
 GET /api/posts -> Get list of Posts
 
-GET /api/post/:id -> Get post information
+GET /api/posts/post/:id -> Get post information
 
-GET /api/video/:id -> Get video
+GET /api/posts/video/:id -> Get video
 
-POST /api/upload -> Upload video information and video
+POST /api/posts/upload -> Upload video information and video
 
 
 ## Build

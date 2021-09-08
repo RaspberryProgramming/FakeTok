@@ -16,17 +16,17 @@ app.get("/api/posts", function(req, res) {
   res.send(tmpDatabase['postList']);
 });
 
-app.get("/api/post/:id", function(req, res) {
+app.get("/api/posts/post/:id", function(req, res) {
   const id = req.params.id;
   res.send(tmpDatabase['postInfo'][id]);
 });
 
-app.get("/api/video/:id", function(req, res) {
+app.get("/api/posts/video/:id", function(req, res) {
   const id = req.params.id;
   res.sendFile(`${__dirname}/dataDir/videos/${id}`);
 });
 
-app.post("/api/upload", function (req, res) {
+app.post("/api/posts/upload", function (req, res) {
   console.log(req.body);
   res.send('Success');
 });
