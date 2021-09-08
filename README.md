@@ -6,8 +6,6 @@ GET /api/post/:id -> Get post information
 
 GET /api/video/:id -> Get video
 
-GET /api/preview/:id -> Get Video Preview
-
 POST /api/upload -> Upload video information and video
 
 
