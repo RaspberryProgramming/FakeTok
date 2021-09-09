@@ -1,15 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchPosts, fetchPost } from '../actions';
 import Video from './Video';
 import Widgets from './VideoWidgets';
 import RightButtons from './VideoWidgets/RightButtons';
 import VideoInfo from './VideoWidgets/VideoInfo';
 
 class Player extends React.Component {
-  // Used to display videos, controls, and informtion
+
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
+
+  componentDidUpdate() {
+    console.log(this.props);
+    if (!this.props.videoId && this.props.posts) {
+      this.props.videoId = this.props.posts[0];
+      this.props.fetchPost(this.props.videoId);
+    }
+  }
+
+  // Used to display videos, controls, and information
   render() {
     return (
       <div className="app-content">
-        <Video />
+        <Video id={this.props.videoId} />
         <Widgets>
           <RightButtons />
           <VideoInfo username={localStorage.getItem('username')} description={"This is a description"} />
@@ -19,4 +34,12 @@ class Player extends React.Component {
   }
 }
 
-export default Player;
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+    videoId: state.currentVideoID,
+  };
+};
+
+
+export default connect(mapStateToProps, { fetchPosts, fetchPost })(Player);
