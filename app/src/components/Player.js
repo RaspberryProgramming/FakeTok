@@ -13,9 +13,8 @@ class Player extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props);
-    if (!this.props.videoId && this.props.posts) {
-      this.props.videoId = this.props.posts[0];
+    
+    if (!this.props.post && this.props.posts) {
       this.props.fetchPost(this.props.videoId);
     }
   }
@@ -36,8 +35,9 @@ class Player extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
-    videoId: state.currentVideoID,
+    posts: state.posts.posts,
+    post: state.posts.post,
+    videoId: state.posts.videoId,
   };
 };
 
