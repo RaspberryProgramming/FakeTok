@@ -20,8 +20,13 @@ export const uploadVideo = (formValues) => async (dispatch, getState) => {
 
     const username = getState().username; // Get username
 
-    const response = await posts.post('/streams', { ...formValues, username });
-
+    const response = await posts.post('/upload', { ...formValues, uploader: username });
+    
     dispatch({ type: 'UPLOAD_VIDEO', payload: response.data });
 
+};
+
+export const setUsername = (username) => async (dispatch) => {
+    localStorage.setItem('username', username);
+    dispatch({ type: 'UPDATE_USERNAME', payload: username });
 };

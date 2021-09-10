@@ -1,5 +1,7 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setUsername } from '../actions';
 import Player from './Player';
 import Navigation from './Navigation';
 import Upload from './Upload';
@@ -10,7 +12,7 @@ import history from '../history';
 
 class App extends React.Component {
   componentDidMount() {
-    console.log(localStorage.getItem('username')); // TODO: Wire up with redux
+    this.props.setUsername(localStorage.getItem('username'));
   }
 
   render() {
@@ -28,4 +30,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(null, { setUsername })(App);

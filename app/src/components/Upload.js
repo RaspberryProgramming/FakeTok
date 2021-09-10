@@ -1,13 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { uploadVideo } from '../actions';
 import TemplateForm from './TemplateForm';
 
 class Upload extends React.Component {
 
   // Required fields for upload form
   fields = [
+    {name: 'title', label: 'Video Title', type:'text'},
     {name: 'description', label:'Description', type:'text'},
     {name: 'file', label:'File', type:'file'},
   ];
+
+  onSubmit = (formValues) => {
+    //console.log(formValues); // Log the form when the form is submitted
+    this.props.uploadVideo(formValues); // send post request to upload video
+  };
 
   // function that validates the form
   validate(formValues) {
@@ -43,10 +51,10 @@ class Upload extends React.Component {
     return (
       <div className="app-content">
         <h1>Upload your Video</h1>
-        <TemplateForm validate={this.validate} fields={this.fields} button/>
+        <TemplateForm validate={this.validate} fields={this.fields} onSubmit={this.onSubmit} button/>
       </div>
     );
   }
 }
 
-export default Upload;
+export default connect(null, { uploadVideo })(Upload);

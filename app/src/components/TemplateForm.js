@@ -41,10 +41,6 @@ const TemplateForm = (props) => {
     );
   };
 
-  const onSubmit = (formValues) => {
-    console.log(formValues); // Log the form when the form is submitted
-  };
-
   // Process the fields from the props object
   const fields = props.fields.map(f => {
     return <Field key={f.name} name={f.name} label={f.label} type={f.type}
@@ -55,7 +51,7 @@ const TemplateForm = (props) => {
   // Return the form with all processed fields
   return (
     <Form
-      onSubmit={onSubmit}
+      onSubmit={props.onSubmit ? props.onSubmit : (e)=>{e.preventDefault();}}
       validate={props.validate}
       initialValues={props.initialValues}
       render={({ handleSubmit }) => (
