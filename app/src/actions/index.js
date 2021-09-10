@@ -21,14 +21,13 @@ export const postUp = () => async (dispatch, getState) => {
 
     const index = state.posts.indexOf(state.videoId); // Get index;
 
-    let videoId = state.posts[index];
+    let videoId = state.posts[index]; // Default to current videoId
 
-    if (index > 0) {
+    if (index > 0) { // If the video can be updated, decrement
         videoId = state.posts[index-1];
     }
 
     dispatch({ type: 'UPDATE_CURRENT_POST', payload: videoId});
-    //fetchPost(videoId);
 };
 
 export const postDown = () => async (dispatch, getState) => {
@@ -36,25 +35,13 @@ export const postDown = () => async (dispatch, getState) => {
 
     const index = state.posts.indexOf(state.videoId); // Get index;
 
-    let videoId = state.posts[index];
+    let videoId = state.posts[index]; // Default to current videoId
 
-
-    if (index < state.posts.length-1) {
+    if (index < state.posts.length-1) { // If the video can be updated, increment
         videoId = state.posts[index+1];
     }
 
     dispatch({ type: 'UPDATE_CURRENT_POST', payload: videoId});
-    //fetchPost(videoId);
-};
-
-export const uploadVideo = (formValues) => async (dispatch, getState) => {
-
-    const username = getState().username; // Get username
-
-    const response = await posts.post('/upload', { ...formValues, uploader: username });
-    
-    dispatch({ type: 'UPLOAD_VIDEO', payload: response.data });
-
 };
 
 export const setUsername = (username) => async (dispatch) => {

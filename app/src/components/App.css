@@ -29,6 +29,8 @@ html, body {
 }
 
 .form-group {
+  display:flex;
+  flex-direction:column;
   margin:10px;
 }
 
@@ -94,6 +96,10 @@ a:visited {
 
 i {
   font-size:48px;
+}
+
+i.fz-128 {
+  font-size: 128px;
 }
 
 .video-info {

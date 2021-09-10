@@ -1,60 +1,133 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { uploadVideo } from '../actions';
-import TemplateForm from './TemplateForm';
+import posts from "../apis/posts";
+import Dropzone, {useDropzone} from 'react-dropzone';
+import axios from 'axios';
 
-class Upload extends React.Component {
+const Upload = (props) => {
+  let errors = {};
 
-  // Required fields for upload form
-  fields = [
-    {name: 'title', label: 'Video Title', type:'text'},
-    {name: 'description', label:'Description', type:'text'},
-    {name: 'file', label:'File', type:'file'},
-  ];
+  let submitFailed = false;
 
-  onSubmit = (formValues) => {
-    //console.log(formValues); // Log the form when the form is submitted
-    this.props.uploadVideo(formValues); // send post request to upload video
-  };
+  const onDrop = useCallback(acceptedFiles => {
+    console.log('Recieved File');
+  }, []);
 
-  // function that validates the form
-  validate(formValues) {
+  const renderError = (field) => {
+    return (
+      <div className={errors[field] ? 'invalid': ''}>
+        {errors[field] ? errors[field]: ''}
+      </div>
+      );
+  }
 
-    // Stores error messages
-    const errors = {};
+  const validate = ({title, description, file}) => {
+    let valid = true;
 
-    // If the file field doesn't exist let them know to upload a file
-    if (!formValues.file) {
-      errors.file = "You must upload a video";
-    } else {
+    if (!title) {
+      errors.title = "Please pass a title for your video.";
+      valid = false;
+    } else if (errors.title) {
+      delete errors.title;
+    }
+
+    if (!description) {
+      errors.description = "Please type a description for your video.";
+      valid = false;
+    } else if (errors.description) {
+      delete errors.description;
+    }
+
+    
+    if (!file) {
+      errors.file = "Please upload a video.";
+      valid = false;
+    } else{
       // Process the filename
-      let filename = formValues.file.split('.');
+      let filename = file.name.split('.');
 
       // Check if the file is a video file
       if (!(['webm', 'mp4'].includes(filename[filename.length-1]))) {
-        errors.file = "You must upload a .mp4 or .webm video";
+        errors.file = "You must upload a mp4 or webm video";
+        valid = false;
+      } else if (errors.description) {
+        delete errors.description;
       }
-
     }
 
-    // Notify user if field is empty
-    if (!formValues.description) {
-      errors.description = "You must enter a description";
+    return valid;
+  }
+
+  const {acceptedFiles, getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, maxFiles: 1})
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+
+    let values = {title: e.target.title.value, description: e.target.description.value, file: acceptedFiles[0]};
+    console.log(values);
+
+    if(validate(values)) {
+      console.log(values);
+      formData.append('title', values.title);
+      formData.append('description', values.description);
+      formData.append('file', values.file);
+      formData.append('uploader', props.username);
+      posts.post('/upload', formData, {headers: {
+        'content-type': 'multipart/form-data'
+      }});
+    } else {
+      submitFailed = true;
     }
 
-    return errors;
+  };
 
-  }
+  // Return the form with all processed fields
+  return (
+    <div className="app-content">
+      <form onSubmit={onSubmit} className="form">
+        <div
+          className={
+            `form-group${submitFailed && errors.title ? 'invalid' : ''}`
+          }>
+          <label>Title</label>
+          <input name="title"></input>
+          {renderError('title')}
+        </div>
 
-  render() {
-    // Form used to upload a video
-    return (
-      <div className="app-content">
-        <h1>Upload your Video</h1>
-        <TemplateForm validate={this.validate} fields={this.fields} onSubmit={this.onSubmit} button/>
-      </div>
-    );
-  }
-}
+        <div
+          className={
+            `form-group ${submitFailed && errors.description ? 'invalid' : ''}`
+          }>
+          <label>Description</label>
+          <input name="description"></input>
+          {renderError('description')}
+        </div>
 
-export default connect(null, { uploadVideo })(Upload);
+        <div {...getRootProps()} className="d-flex flex-column align-items-center">
+          <input name="file" {...getInputProps()} />
+          <i className="bi bi-file-arrow-up fz-128" />
+          {
+            isDragActive ?
+              <p>Drop the files here ...</p> :
+              <p>Drag 'n' drop some files here, or click to select files</p>
+          }
+          {renderError('file')}
+        </div>
+        <button className='btn btn-primary'>
+            Submit
+        </button>
+      </form>
+    </div>
+  );
+};
+
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.account.username,
+  };
+};
+
+export default connect(mapStateToProps, {})(Upload);
