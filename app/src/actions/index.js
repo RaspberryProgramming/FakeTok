@@ -16,6 +16,37 @@ export const fetchPost = (id) => async (dispatch) => {
 
 };
 
+export const postUp = () => async (dispatch, getState) => {
+    const state = getState().posts; // Get state
+
+    const index = state.posts.indexOf(state.videoId); // Get index;
+
+    let videoId = state.posts[index];
+
+    if (index > 0) {
+        videoId = state.posts[index-1];
+    }
+
+    dispatch({ type: 'UPDATE_CURRENT_POST', payload: videoId});
+    //fetchPost(videoId);
+};
+
+export const postDown = () => async (dispatch, getState) => {
+    const state = getState().posts; // Get state
+
+    const index = state.posts.indexOf(state.videoId); // Get index;
+
+    let videoId = state.posts[index];
+
+
+    if (index < state.posts.length-1) {
+        videoId = state.posts[index+1];
+    }
+
+    dispatch({ type: 'UPDATE_CURRENT_POST', payload: videoId});
+    //fetchPost(videoId);
+};
+
 export const uploadVideo = (formValues) => async (dispatch, getState) => {
 
     const username = getState().username; // Get username

@@ -7,6 +7,8 @@ const postReducer = (state={}, action) => {
       return {...state, post: action.payload };
     case 'UPLOAD_VIDEO':
       return { ...state, posts: [...state.posts, action.payload] };
+    case 'UPDATE_CURRENT_POST':
+      return {...state, videoId: action.payload, post: undefined};
     default:
       return state;
   }
