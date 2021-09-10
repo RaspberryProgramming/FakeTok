@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 const multer  = require('multer');
 const bodyParser = require('body-parser');
 const { nextTick } = require('process');
@@ -67,8 +68,8 @@ app.use((req, res, next) => { // Log request to terminal if loglevel = debug
 
 /* istanbul ignore next */
 if (!module.parent) {
-  app.listen(3000);
-  console.log('Express started on port 3000');
+  app.listen(80);
+  console.log('Express started on port 80'); 
 }
 
 app.get("/api/posts", function(req, res) {
@@ -99,4 +100,8 @@ app.post("/api/posts/upload", upload.single('file'), function (req, res) {
 
   console.log(tmpDatabase);
 
+});
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/app/build/index.html'));
 });
