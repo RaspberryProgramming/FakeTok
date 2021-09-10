@@ -21,12 +21,15 @@ class Player extends React.Component {
 
   // Used to display videos, controls, and information
   render() {
+
+    let link = this.props.videoId ? `/api/posts/video/${this.props.videoId}` : 'default.webm';
+
     return (
       <div className="app-content">
-        <Video id={this.props.videoId} />
+        <Video link={link} />
         <Widgets>
           <RightButtons />
-          <VideoInfo username={localStorage.getItem('username')} description={"This is a description"} />
+          <VideoInfo username={this.props.post? this.props.post.uploader: ''} description={this.props.post ? this.props.post.description: ''} />
         </Widgets>
       </div>
     );

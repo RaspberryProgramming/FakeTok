@@ -6,7 +6,7 @@ class App extends React.Component {
     // Temporarily return default video
     return (
       <div className="video">
-        <video src={`/api/posts/video/${this.props.id}`} loop autoPlay></video>
+        <video src={this.props.link} loop autoPlay></video>
       </div>
     );
   }
