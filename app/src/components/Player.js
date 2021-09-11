@@ -1,54 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useSwipeable } from 'react-swipeable';
 import { fetchPosts, fetchPost, postUp, postDown } from '../actions';
 import Video from './Video';
 import Widgets from './VideoWidgets';
 import RightButtons from './VideoWidgets/RightButtons';
 import VideoInfo from './VideoWidgets/VideoInfo';
 
-class Player extends React.Component {
 
-  keypress = (e) => {
-    
-    if(e.key === "ArrowUp") {
-      this.props.postUp();
-    } else if (e.key === "ArrowDown") {
-      this.props.postDown();
+const Player = (props) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if(!mounted) {
+      props.fetchPosts();
+
+      window.onkeydown = (e) => {
+        
+        if(e.key === "ArrowUp") {
+          props.postUp();
+        } else if (e.key === "ArrowDown") {
+          props.postDown();
+        }
+        
+      }
+      console.log(mounted);
+      
+      setMounted(true);
+
+      // Cleanup
+      return () => {
+        window.onkeydown = undefined;
+      }
     }
-    
+  });
+
+  
+
+  if (!props.post && props.posts) {
+    props.fetchPost(props.videoId);
   }
 
-  componentDidMount() {
-    this.props.fetchPosts();
-    window.onkeydown = this.keypress;
-  }
+  const handlers = useSwipeable({
+    onSwipedUp: () => props.postDown(),
+    onSwipedDown: () => props.postUp(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
 
-  componentWillUnmount() {
-    window.onkeypress = undefined;
-  }
-
-  componentDidUpdate() {
-    
-    if (!this.props.post && this.props.posts) {
-      this.props.fetchPost(this.props.videoId);
-    }
-  }
+  let link = props.videoId ? `/api/posts/video/${props.videoId}` : 'default.webm';
 
   // Used to display videos, controls, and information
-  render() {
-    console.log(this.props.videoId);
-    let link = this.props.videoId ? `/api/posts/video/${this.props.videoId}` : 'default.webm';
-
-    return (
-      <div className="app-content">
-        <Video link={link} />
-        <Widgets>
-          <RightButtons />
-          <VideoInfo username={this.props.post? this.props.post.uploader: ''} description={this.props.post ? this.props.post.description: ''} />
-        </Widgets>
-      </div>
-    );
-  }
+  
+  return (
+    <div className="app-content" {...handlers} >
+      <Video link={link} />
+      <Widgets>
+        <RightButtons />
+        <VideoInfo username={props.post? props.post.uploader: ''} description={props.post ? props.post.description: ''} />
+      </Widgets>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
